@@ -50,21 +50,22 @@ EOF
 
 mv "$tmpfile" "$SECRETS_FILE"
 
-# Copy default configs from the image
 if [ -z "$(ls -A "$CONFIG_DEST")" ]; then
-    echo "Config directory empty — copying defaults from image..."
+    # Start the service
+    docker compose up -d "${SERVICE_NAME}"
 
-    # Create a temporary container
-    TEMP_CONTAINER=$(docker create ghcr.io/wavelog/wavelog:latest)
+    # Get the container ID
+    CONTAINER_ID=$(docker compose ps -q "${SERVICE_NAME}")
 
+    # Wait for config files to be generated
+    echo "Sleeping 10 seconds while initial configs are generated..."
+    sleep 10
+    
     # Copy defaults to host
-    docker cp "${TEMP_CONTAINER}:${CONFIG_PATH}/${APP_CONFIG}" "$CONFIG_DEST"
-    docker cp "${TEMP_CONTAINER}:${CONFIG_PATH}/${VAR_CONFIG}" "$CONFIG_DEST"
-
-    # Remove temporary container
-    docker rm "$TEMP_CONTAINER"
+    docker cp "${CONTAINER_ID}:${CONFIG_PATH}/${APP_CONFIG}" "$CONFIG_DEST"
+    docker cp "${CONTAINER_ID}:${CONFIG_PATH}/${VAR_CONFIG}" "$CONFIG_DEST"
+else
+    # Start the service
+    docker compose up -d "${SERVICE_NAME}"
 fi
-
-# Start the service
-docker compose up -d "${SERVICE_NAME}"
 
