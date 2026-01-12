@@ -3,7 +3,7 @@ set -euo pipefail
 
 # Variables
 SERVICE_NAME="wavelog-main"
-APP_PATH="/var/www/html/application/config/config.php:"
+APP_PATH="/var/www/html/application/config/config.php"
 VAR_PATH="/var/www/html/application/config/wavelog.php"
 APP_DEST="./config/config.php"
 VAR_DEST="./config/wavelog.php"
