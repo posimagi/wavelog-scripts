@@ -4,6 +4,10 @@ services:
     container_name: wavelog-db
     env_file:
       ./secrets/db.env
+    environment:
+      MARIADB_RANDOM_ROOT_PASSWORD: yes
+      MARIADB_DATABASE: wavelog
+      MARIADB_USER: wavelog
     volumes:
       - wavelog-dbdata:/var/lib/mysql
     restart: unless-stopped
