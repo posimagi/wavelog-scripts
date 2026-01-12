@@ -31,7 +31,7 @@ if [[ -e "$SECRETS_FILE" ]]; then
 fi
 
 # Generate database password
-DB_PASSWORD="$(head -c 1000 /dev/urandom | tr -dc 'A-Za-z0-9!@#$%^&*' | head -c "$LENGTH")"
+DB_PASSWORD="$(head -c 1000 /dev/urandom | tr -dc 'A-Za-z0-9' | head -c "$LENGTH")"
 
 # Create secrets directory
 mkdir -p "$SECRETS_DIR"
