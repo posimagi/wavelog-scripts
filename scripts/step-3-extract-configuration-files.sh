@@ -28,12 +28,6 @@ if [[ -d "$CONFIG_DEST" && "$(ls -A "$CONFIG_DEST")" ]]; then
     exit 1
 fi
 
-# Ensure Docker daemon is enabled on boot
-if command -v systemctl >/dev/null 2>&1; then
-  systemctl enable docker
-  systemctl start docker
-fi
-
 # Create the local config directory
 mkdir -p "${CONFIG_DEST}"
 

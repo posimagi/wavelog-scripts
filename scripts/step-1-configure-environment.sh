@@ -26,12 +26,6 @@ if [[ -e "$SECRETS_FILE" ]]; then
     exit 1
 fi
 
-# Ensure Docker daemon is enabled on boot
-if command -v systemctl >/dev/null 2>&1; then
-  systemctl enable docker
-  systemctl start docker
-fi
-
 # Generate database password
 DB_PASSWORD="$(head -c 1000 /dev/urandom | tr -dc 'A-Za-z0-9!@#$%^&*' | head -c "$LENGTH")"
 
