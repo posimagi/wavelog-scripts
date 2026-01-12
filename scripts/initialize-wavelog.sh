@@ -50,21 +50,21 @@ EOF
 
 mv "$tmpfile" "$SECRETS_FILE"
 
-# Ensure the service is running
-docker compose up -d "${SERVICE_NAME}"
+# Copy default configs from the image
+if [ -z "$(ls -A "$CONFIG_DEST")" ]; then
+    echo "Config directory empty — copying defaults from image..."
 
-# Get the container ID for the service
-CONTAINER_ID=$(docker compose ps -q "${SERVICE_NAME}")
+    # Create a temporary container
+    TEMP_CONTAINER=$(docker create ${SERVICE_NAME})
 
-if [[ -z "${CONTAINER_ID}" ]]; then
-  echo "Failed to determine container ID for service '${SERVICE_NAME}'"
-  exit 1
+    # Copy defaults to host
+    docker cp "${TEMP_CONTAINER}:${CONFIG_PATH}/${APP_CONFIG}" "$CONFIG_DEST"
+    docker cp "${TEMP_CONTAINER}:${CONFIG_PATH}/${VAR_CONFIG}" "$CONFIG_DEST"
+
+    # Remove temporary container
+    docker rm "$TEMP_CONTAINER"
 fi
 
-# Copy the file out of the container
-docker cp "${CONTAINER_ID}:${CONFIG_PATH}/${APP_CONFIG}" "${CONFIG_DEST}/${APP_CONFIG}"
-echo "Copied ${CONFIG_PATH}/${APP_CONFIG} to ${CONFIG_DEST}/${APP_CONFIG}"
-
-docker cp "${CONTAINER_ID}:${CONFIG_PATH}/${VAR_CONFIG}" "${CONFIG_DEST}/${VAR_CONFIG}"
-echo "Copied ${CONFIG_PATH}/${VAR_CONFIG} to ${CONFIG_DEST}/${VAR_CONFIG}"
+# Start the service
+docker compose up -d "${SERVICE_NAME}"
 
