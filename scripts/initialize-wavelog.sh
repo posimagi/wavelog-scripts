@@ -32,7 +32,7 @@ fi
 mkdir -p "${CONFIG_DEST}"
 
 # Generate database password
-DB_PASSWORD="$(head -c 100 /dev/urandom | tr -dc 'A-Za-z0-9!@#$%^&*' | head -c "$LENGTH")"
+DB_PASSWORD="$(head -c 1000 /dev/urandom | tr -dc 'A-Za-z0-9!@#$%^&*' | head -c "$LENGTH")"
 
 # Create secrets directory
 mkdir -p "$SECRETS_DIR"
