@@ -58,7 +58,7 @@ docker compose up -d
 # Report success
 echo -e "Successfully configured Wavelog environment. Visit ${CYAN}http://localhost:8086${NC} in your browser to continue setup. Once that is complete, proceed to Step 2."
 echo -e "Database credentials:"
-echo -e "Hostname: ${CYAN}wavelog-db${CN}"
+echo -e "Hostname: ${CYAN}wavelog-db${NC}"
 echo -e "Database Name: ${CYAN}wavelog${NC}"
 echo -e "Username: ${CYANwavelog${NC}"
 echo -e "Password: ${CYAN}${DB_PASSWORD}${NC}."
