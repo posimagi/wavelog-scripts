@@ -13,7 +13,7 @@ COMPOSE_SRC="post-setup/docker-compose.yaml"
 COMPOSE_DEST="./docker-compose.yaml"
 
 # Ensure the script is running from the Wavelog project root directory
-if [[ ! -f "docker-compose.yaml" ]]; then
+if [[ ! -f ".gitignore" ]]; then
     echo "ERROR: This script must be run from the Wavelog project root, not from the scripts directory." >&2
     echo -e "Try running as: ${CYAN}sudo ./scripts/$(basename ${0})${NC}" >&2
     exit 1
