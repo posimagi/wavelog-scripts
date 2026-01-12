@@ -8,7 +8,6 @@ if [[ "$EUID" -ne 0 ]]; then
     exit 1
 fi
 
-
 # Variables
 SERVICE_NAME="wavelog-main"
 CONFIG_PATH="/var/www/html/application/config"
@@ -18,6 +17,11 @@ VAR_CONFIG="wavelog.php"
 LENGTH=32
 SECRETS_DIR="./secrets"
 SECRETS_FILE="${SECRETS_DIR}/db.env"
+
+if [[ -e "$SECRETS_FILE" ]]; then
+    echo "ERROR: Secrets file already exists. Aborting to prevent overwriting secrets." >&2
+    exit 1
+fi
 
 # Ensure Docker daemon is enabled on boot
 if command -v systemctl >/dev/null 2>&1; then
