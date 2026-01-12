@@ -13,14 +13,14 @@ LENGTH=32
 # Ensure the script is running from the Wavelog project root directory
 if [[ ! -f "docker-compose.yaml" ]]; then
     echo "ERROR: This script must be run from the Wavelog project root, not from the scripts directory." >&2
-    echo "Try running as: ${CYAN}sudo ./scripts/$(basename ${0})${NC}" >&2
+    echo -e "Try running as: ${CYAN}sudo ./scripts/$(basename ${0})${NC}" >&2
     exit 1
 fi
 
 # Ensure the script is being run as root
 if [[ "$EUID" -ne 0 ]]; then
     echo "ERROR: This script must be run as root." >&2
-    echo "Try running as: ${CYAN}sudo ./scripts/$(basename ${0})${NC}" >&2
+    echo -e "Try running as: ${CYAN}sudo ./scripts/$(basename ${0})${NC}" >&2
     exit 1
 fi
 

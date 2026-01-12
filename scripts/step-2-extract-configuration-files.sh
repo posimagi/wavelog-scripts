@@ -15,7 +15,7 @@ COMPOSE_DST="./docker-compose.yaml"
 # Ensure the script is running from the Wavelog project root directory
 if [[ ! -f "docker-compose.yaml" ]]; then
     echo "ERROR: This script must be run from the Wavelog project root, not from the scripts directory." >&2
-    echo "Try running as: ${CYAN}sudo ./scripts/$(basename ${0})${NC}" >&2
+    echo -e "Try running as: ${CYAN}sudo ./scripts/$(basename ${0})${NC}" >&2
     exit 1
 fi
 
@@ -28,7 +28,7 @@ fi
 
 # Ensure we are not about to overwrite existing configs
 if [[ -d "$CONFIG_DEST" && "$(ls -A "$CONFIG_DEST")" ]]; then
-    echo "ERROR: '$CONFIG_DEST' already exists and is not empty. Aborting to prevent overwriting configuration." >&2
+    echo -e "ERROR: '$CONFIG_DEST' already exists and is not empty. Aborting to prevent overwriting configuration." >&2
     exit 1
 fi
 
@@ -59,6 +59,6 @@ fi
 mv "$COMPOSE_SRC" "$COMPOSE_DST"
 
 # Report success
-echo -e "Successfully extracted configuration files. You can edit them in the ${CYAN}${CONFIG_DEST}${NC} directory."
+echo -e "Successfully extracted configuration files. You can edit them in the ${CYAN}config${NC} directory."
 echo -e "Apply changes by running: ${CYAN}sudo ./scripts/apply-configuration-changes.sh${NC}"
 
