@@ -19,7 +19,7 @@ services:
       - wavelog-config:/var/www/html/application/config/docker
       - wavelog-uploads:/var/www/html/uploads
       - wavelog-userdata:/var/www/html/userdata
-      - ./config:/var/www/html/application/config:ro
+      - ./config:/var/www/html/application/config
     ports:
       - "8086:80"
     restart: unless-stopped
