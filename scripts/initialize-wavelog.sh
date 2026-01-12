@@ -26,10 +26,6 @@ if command -v systemctl >/dev/null 2>&1; then
 fi
 
 mkdir -p "${CONFIG_DEST}"
-touch "${CONFIG_DEST}/${APP_CONFIG}"
-touch "${CONFIG_DEST}/${VAR_CONFIG}"
-chmod 0644 "${CONFIG_DEST}/${APP_CONFIG}"
-chmod 0644 "${CONFIG_DEST}/${VAR_CONFIG}"
 
 # Generate database password
 DB_PASSWORD="$(head -c 100 /dev/urandom | tr -dc 'A-Za-z0-9!@#$%^&*' | head -c "$LENGTH")"
