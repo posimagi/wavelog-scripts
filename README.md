@@ -4,7 +4,7 @@ Setting up and maintaining a Wavelog instance isn't always as straightforward as
 
 ## How to use
 
-1. Clone the repo
+1. Clone the repo by running `git clone https://github.com/posimagi/wavelog-scripts.git`
 2. Run `sudo ./scripts/step-1-configure-environment.sh` from the repo root
 3. Go to `http://localhost:8086` in your browser and follow the instructions on screen
 4. Run `sudo ./scripts/step-2-extract-configuration-files.sh` from the repo root
