@@ -55,7 +55,7 @@ if [ -z "$(ls -A "$CONFIG_DEST")" ]; then
     echo "Config directory empty — copying defaults from image..."
 
     # Create a temporary container
-    TEMP_CONTAINER=$(docker create ${SERVICE_NAME})
+    TEMP_CONTAINER=$(docker create ghcr.io/wavelog/wavelog:latest)
 
     # Copy defaults to host
     docker cp "${TEMP_CONTAINER}:${CONFIG_PATH}/${APP_CONFIG}" "$CONFIG_DEST"
