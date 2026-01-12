@@ -32,7 +32,7 @@ chmod 0644 "${CONFIG_DEST}/${APP_CONFIG}"
 chmod 0644 "${CONFIG_DEST}/${VAR_CONFIG}"
 
 # Generate database password
-DB_PASSWORD="$(head -c 100 /dev/urandom | tr -dc 'A-Za-z0-9!@#$%^&*()-_=+{}' | head -c "$LENGTH")"
+DB_PASSWORD="$(head -c 100 /dev/urandom | tr -dc 'A-Za-z0-9!@#$%^&*' | head -c "$LENGTH")"
 
 # Create secrets directory
 mkdir -p "$SECRETS_DIR"
