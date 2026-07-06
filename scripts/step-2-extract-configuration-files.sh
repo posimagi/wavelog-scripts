@@ -36,18 +36,18 @@ fi
 mkdir -p "${CONFIG_DEST}"
 
 # Create a temporary container to extract default config files
-TEMP_CONTAINER=$(docker create "$IMAGE_NAME")
+TEMP_CONTAINER=$(docker create "$IMAGE_NAME") || { echo "ERROR: Failed to create temporary Docker container." >&2; exit 1; }
 
 # Extract the files
-docker cp "${TEMP_CONTAINER}:/var/www/html/application/config/config.sample.php" "${CONFIG_DEST}/config.php"
-docker cp "${TEMP_CONTAINER}:/var/www/html/application/config/wavelog.php" "${CONFIG_DEST}/wavelog.php"
+docker cp "${TEMP_CONTAINER}:/var/www/html/application/config/config.sample.php" "${CONFIG_DEST}/config.php" || { echo "ERROR: Failed to extract config.sample.php." >&2; docker rm "$TEMP_CONTAINER" 1>/dev/null; exit 1; }
+docker cp "${TEMP_CONTAINER}:/var/www/html/application/config/wavelog.php" "${CONFIG_DEST}/wavelog.php" || { echo "ERROR: Failed to extract wavelog.php." >&2; docker rm "$TEMP_CONTAINER" 1>/dev/null; exit 1; }
 
 # Set correct permissions
 chmod 0644 "${CONFIG_DEST}/config.php" 
 chmod 0644 "${CONFIG_DEST}/wavelog.php"
 
 # Remove the temporary container
-docker rm "$TEMP_CONTAINER" 1>/dev/null
+docker rm "$TEMP_CONTAINER" 1>/dev/null || { echo "WARNING: Failed to remove temporary Docker container." >&2; }
 
 # Ensure the post-setup config exists
 if [[ ! -f "$COMPOSE_SRC" ]]; then
