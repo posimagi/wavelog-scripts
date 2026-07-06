@@ -26,6 +26,22 @@ if [[ "$EUID" -ne 0 ]]; then
     exit 1
 fi
 
+# Ensure Docker is installed, installing it if necessary
+if ! command -v docker >/dev/null 2>&1; then
+    echo -e "Docker not found. Installing Docker via the official convenience script from ${CYAN}https://get.docker.com${NC}..."
+    if ! command -v curl >/dev/null 2>&1; then
+        echo "ERROR: 'curl' is required to install Docker but was not found. Please install Docker manually and re-run this script." >&2
+        exit 1
+    fi
+    curl -fsSL https://get.docker.com -o /tmp/get-docker.sh
+    sh /tmp/get-docker.sh
+    rm -f /tmp/get-docker.sh
+    if ! command -v docker >/dev/null 2>&1; then
+        echo "ERROR: Docker installation failed. Please install Docker manually and re-run this script." >&2
+        exit 1
+    fi
+fi
+
 # Ensure we are not about to overwrite existing secrets
 if [[ -e "$SECRETS_FILE" ]]; then
     echo "ERROR: Secrets file already exists. Aborting to prevent overwriting secrets." >&2
