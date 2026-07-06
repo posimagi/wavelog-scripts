@@ -30,8 +30,27 @@ fi
 if ! command -v docker >/dev/null 2>&1; then
     echo -e "Docker not found. Installing Docker via the official convenience script from ${CYAN}https://get.docker.com${NC}..."
     if ! command -v curl >/dev/null 2>&1; then
-        echo "ERROR: 'curl' is required to install Docker but was not found. Please install Docker manually and re-run this script." >&2
-        exit 1
+        echo "curl not found. Installing curl..."
+        if command -v apt-get >/dev/null 2>&1; then
+            apt-get update && apt-get install -y curl
+        elif command -v dnf >/dev/null 2>&1; then
+            dnf install -y curl
+        elif command -v yum >/dev/null 2>&1; then
+            yum install -y curl
+        elif command -v zypper >/dev/null 2>&1; then
+            zypper install -y curl
+        elif command -v pacman >/dev/null 2>&1; then
+            pacman -Sy --noconfirm curl
+        elif command -v apk >/dev/null 2>&1; then
+            apk add --no-cache curl
+        else
+            echo "ERROR: Could not determine a package manager to install 'curl'. Please install curl manually and re-run this script." >&2
+            exit 1
+        fi
+        if ! command -v curl >/dev/null 2>&1; then
+            echo "ERROR: curl installation failed. Please install curl manually and re-run this script." >&2
+            exit 1
+        fi
     fi
     curl -fsSL https://get.docker.com -o /tmp/get-docker.sh
     sh /tmp/get-docker.sh
